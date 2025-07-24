@@ -3,7 +3,7 @@ name: Deploy Static Website to S3
 on:
   push:
     branches:
-      - main
+      - main  # Change to 'master' if that's your default branch
 
 jobs:
   deploy:
@@ -18,8 +18,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+          aws-region: ap-south-1  # Change if your bucket is in another region
 
       - name: Sync files to S3
         run: |
-          aws s3 sync ./ s3://tusharportfolio1 --delete --acl public-read --exclude ".git/*" --exclude ".github/*"
+          aws s3 sync ./ s3://tusharportfolio1 \
+            --delete \
+            --acl public-read \
+            --exclude ".git/*" \
+            --exclude ".github/*"
